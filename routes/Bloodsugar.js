@@ -8,10 +8,11 @@ router.get('/instance/:id',requireToken,async (req,res)=>{
     try{
         const id=req.params.id;
         const bs= await Bloodsugar.findById({_id:id});
-        res.json( bs)
+        console.log(bs)
+        res.status(200).json( bs)
     }
     catch(err){
-        res.json({"error":"Connection Failed! Try Again"})
+        res.status(500).json({"error":"Connection Failed! Try Again"})
     }
 })
 
@@ -22,11 +23,10 @@ router.get('/:date',requireToken,async (req,res)=>{
         console.log(date)
         const bs= await Bloodsugar.find({"creationDate":date});
         res.setHeader("Content-Type","application/json")
-        res.json( bs)
+        res.status(200).json(bs)
     }
     catch(err){
-       
-        res.json({"error":"Connection Failed! Try Again"})
+        res.status(500).json({"error":"Connection Failed! Try Again"})
     }
 })
 
@@ -34,13 +34,14 @@ router.get('/:date',requireToken,async (req,res)=>{
 router.post('/',requireToken,async(req,res)=>{
     try{
         const {concentration,unit,description,date,event,creationDate,creationTime}=req.body;
+        console.log(req.body)
         const user_id=req.user._id;
         const bs=new Bloodsugar({concentration,unit,description,date,event,creationDate,creationTime,user_id});
         bs.save()
-    res.json({"status":"Stored Successfully"})
+    res.status(201).json({"status":"Stored Successfully"})
     }
     catch(err){
-        res.json({"error":"Not Stored! Try Again"})
+        res.status(500).json({"error":"Not Stored! Try Again"})
     }
     
 })
@@ -50,10 +51,10 @@ router.patch('/instance/:id',requireToken,async (req,res)=>{
     try{
         const id=req.params.id;
         const bs= await Bloodsugar.findByIdAndUpdate({_id:id},req.body);
-        res.json({"status":"Successfully Updated"})
+        res.status(200).json({"status":"Successfully Updated"})
     }
     catch(err){
-        res.json({"error":"Connection Failed! Try Again"})
+        res.status(500).json({"error":"Connection Failed! Try Again"})
     }
 })
 
@@ -62,10 +63,10 @@ router.delete('/instance/:id',requireToken,async (req,res)=>{
     try{
         const id=req.params.id;
         const bs= await Bloodsugar.findByIdAndDelete({_id:id},req.body);
-        res.json({"status":"Successfully Deleted"})
+        res.status(200).json({"status":"Successfully Deleted"})
     }
     catch(err){
-        res.json({"error":"Connection Failed! Try Again"})
+        res.status(500).json({"error":"Connection Failed! Try Again"})
     }
 })
 
