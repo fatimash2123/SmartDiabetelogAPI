@@ -101,10 +101,10 @@ router.get('/profile', requireToken, async (req, res) => {
 router.delete('/', requireToken, async (req, res) => {
     try {
         const accountInfo = await User.findByIdAndDelete({ _id: req.user._id });
-        res.json({ "status": "Successfully Delete", accountInfo })
+        res.status(200).json({ "status": "Successfully Delete", accountInfo })
     }
     catch (err) {
-        res.json({ "error": "Connection Failed! Try Again" })
+        res.status(500).json({ "error": "Connection Failed! Try Again" })
     }
 })
 

@@ -2,10 +2,6 @@ const mongoose=require("mongoose");
 
 const CholesterolSchema=new mongoose.Schema({
     id:mongoose.Schema.Types.ObjectId,
-    cholesterol:{
-        type:Number,
-        required:true
-    },
     ldl:{
         type:Number,
         required:true

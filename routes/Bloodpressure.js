@@ -8,10 +8,10 @@ router.get('/instance/:id',requireToken,async (req,res)=>{
     try{
         const id=req.params.id;
         const bp= await Bloodpressure.findById({_id:id});
-        res.json( bp)
+        res.status(200).json( bp)
     }
     catch(err){
-        res.json({"error":"Connection Failed! Try Again"})
+        res.status(500).json({"error":"Connection Failed! Try Again"})
     }
 })
 
@@ -26,10 +26,10 @@ router.get('/:sdate/:edate',requireToken,async (req,res)=>{
             user_id:req.user._id,
             createdAt: { $gte: sdate, $lte: edate }},{disystolic:1,systolic:1,description:1});
             console.log("L")
-        res.json(bs)
+        res.status(200).json(bs)
     }
     catch(err){
-        res.json({"error":"Connection Failed! Try Again"})
+        res.status(500).json({"error":"Connection Failed! Try Again"})
     }
 })
 
@@ -40,10 +40,10 @@ router.post('/',requireToken,async(req,res)=>{
         const user_id=req.user._id;
         const bp=new Bloodpressure({disystolic,systolic,description,createdAt,user_id});
         bp.save()
-    res.json({"status":"Stored Successfully"})
+    res.status(200).json({"status":"Stored Successfully"})
     }
     catch(err){
-        res.json({"error":"Not Stored! Try Again"})
+        res.status(500).json({"error":"Not Stored! Try Again"})
     }
     
 })
@@ -53,10 +53,10 @@ router.patch('/instance/:id',requireToken,async (req,res)=>{
     try{
         const id=req.params.id;
         const bp= await Bloodpressure.findByIdAndUpdate({_id:id},req.body);
-        res.json({"status":"Successfully Updated"})
+        res.status(200).json({"status":"Successfully Updated"})
     }
     catch(err){
-        res.json({"error":"Connection Failed! Try Again"})
+        res.status(500).json({"error":"Connection Failed! Try Again"})
     }
 })
 
@@ -65,10 +65,10 @@ router.delete('/instance/:id',requireToken,async (req,res)=>{
     try{
         const id=req.params.id;
         const bp= await Bloodpressure.findByIdAndDelete({_id:id},req.body);
-        res.json({"status":"Successfully Deleted"})
+        res.status(200).json({"status":"Successfully Deleted"})
     }
     catch(err){
-        res.json({"error":"Connection Failed! Try Again"})
+        res.status(500).json({"error":"Connection Failed! Try Again"})
     }
 })
 
