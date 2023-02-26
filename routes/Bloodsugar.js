@@ -23,6 +23,7 @@ router.get('/:date',requireToken,async (req,res)=>{
         console.log(date)
         const bs= await Bloodsugar.find({"creationDate":date});
         res.setHeader("Content-Type","application/json")
+        console.log(bs)
         res.status(200).json(bs)
     }
     catch(err){
