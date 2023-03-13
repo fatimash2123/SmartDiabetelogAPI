@@ -3,6 +3,16 @@ const app=express();
 const requireToken=require("./middlewares/requireToken");
 const PORT=3000;
 const bodyParser=require("body-parser")
+const http=require("http")
+//const newHostname = '192.168.170.35'; // New IP address
+// const cors=require("cors")
+// app.use(cors({
+//     origin: 'http://192.168.170.35/:3000',
+//     methods: ['GET', 'POST'],
+//     headers: ['Content-Type'],
+//     credentials: true
+//   }));
+
 app.use(bodyParser.json());
 const {mongoURL}=require("./keys")
 const mongoose=require("mongoose")

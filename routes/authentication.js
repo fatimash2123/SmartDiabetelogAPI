@@ -16,15 +16,15 @@ router.post('/register', async (req, res) => {
         // //generate token
         const token=await user.generateAuthToken();
         console.log(token)
-         res.status(200).json({ "status":"registeration in process","token":token });
+        return res.status(200).json({ status:"registeration in process","token":token });
     }
     catch (err) {
         if (err.code == 11000) {
-            res.status(422).json({ "error": "Email is already registered" })
+            return res.status(422).json({ error: "Email is already registered" })
         }
         else {
             console.log(err.message)
-            res.status(500).json({ "error": "Something went Wrong! Try Again" })
+           return  res.status(500).json({ error: "Something went Wrong! Try Again" })
         }
     }
 })
