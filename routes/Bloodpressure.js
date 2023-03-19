@@ -24,7 +24,7 @@ router.get('/:sdate/:edate',requireToken,async (req,res)=>{
         console.log(edate)
         let bs= await Bloodpressure.find({
             user_id:req.user._id,
-            createdAt: { $gte: sdate, $lte: edate }},{disystolic:1,systolic:1,description:1});
+            createdAt: { $gte: sdate, $lte: edate }});
             console.log("L")
         res.status(200).json(bs)
     }
