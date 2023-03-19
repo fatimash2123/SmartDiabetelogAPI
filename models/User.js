@@ -44,7 +44,7 @@ const UserSchema=new mongoose.Schema({
         type: String,
         enum : ['Very Light','Light','Moderate','Heavy',
         'Very Heavy'],
-        default:'light'
+        default:'Light'
     },
     gender:{
         type: String,
