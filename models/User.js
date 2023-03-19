@@ -38,7 +38,14 @@ const UserSchema=new mongoose.Schema({
         type:Boolean,
         default:false
     },
-    tokens:[{"token":{type:String}}]
+    state:{type:Object},
+    tokens:[{"token":{type:String}}],
+    activityLevel:{
+        type: String,
+        enum : ['veryLight','light','moderate','heavy',
+        'veryHeavy'],
+        default:'light'
+    },
 
 })
 
