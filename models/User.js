@@ -42,9 +42,14 @@ const UserSchema=new mongoose.Schema({
     tokens:[{"token":{type:String}}],
     activityLevel:{
         type: String,
-        enum : ['veryLight','light','moderate','heavy',
-        'veryHeavy'],
+        enum : ['Very Light','Light','Moderate','Heavy',
+        'Very Heavy'],
         default:'light'
+    },
+    gender:{
+        type: String,
+        enum : ['Male',"Female"],
+        default:'Male'
     },
 
 })
