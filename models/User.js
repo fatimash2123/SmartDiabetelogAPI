@@ -51,7 +51,9 @@ const UserSchema=new mongoose.Schema({
         enum : ['Male',"Female"],
         default:'Male'
     },
-
+    age:{
+        type:Number
+    },
 })
 
 //hashing the password before saving
