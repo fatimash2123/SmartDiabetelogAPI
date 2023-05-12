@@ -12,14 +12,19 @@ const OralMedicationSchema=new mongoose.Schema({
     },
     unit:{
         type:String,
-        default:"mg",
+        default:"20",
         required:true
     },
-    time:[{type: String}],
+    time:{type: String},
     user_id:{
         type:Object,
         ref:'User'
-    }
+    },
+    type:{
+        type: String,
+        enum : ['diabetic',"nondiabetic"],
+        default:'nondiabetic'
+    },
 
 },{timestamps:true})
 

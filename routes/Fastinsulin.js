@@ -7,7 +7,8 @@ const requireToken=require("../middlewares/requireToken");
 router.get('/:id',requireToken,async (req,res)=>{
     try{
         const id=req.params.id;
-        const c= await FastInsulin.findById({_id:id});
+        const user_id=req.user._id;
+        const c= await FastInsulin.find({"user_id":user_id,"prescription_id":id});
         res.json(c)
     }
     catch(err){
@@ -19,9 +20,9 @@ router.get('/:id',requireToken,async (req,res)=>{
 // add new fast insulin  instance
 router.post('/',requireToken,async(req,res)=>{
     try{
-        const { name,isf,carb_ratio}=req.body;
+        const { name,isf,carb_ratio,prescription_id}=req.body;
         const user_id=req.user._id;
-        const c=new FastInsulin({name,isf,carb_ratio,user_id});
+        const c=new FastInsulin({name,isf,carb_ratio,user_id,prescription_id});
         await c.save()
         res.json({"status":"Stored Successfully",c})
    

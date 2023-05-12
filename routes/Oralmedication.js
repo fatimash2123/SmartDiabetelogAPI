@@ -21,9 +21,10 @@ router.post('/',requireToken,async(req,res)=>{
     try{
         const { name,dosage,time}=req.body;
         const user_id=req.user._id;
+        console.log("user in add oral medication is ",user_id)
         const c=new Oralmedication({name,dosage,time,user_id});
         c.save()
-        res.json({"status":"Stored Successfully"})
+        res.json({"medicine":c,"status":"Stored Successfully"})
    
     }
     catch(err){

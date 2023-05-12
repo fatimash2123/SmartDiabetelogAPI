@@ -18,7 +18,8 @@ router.get('/all',requireToken,async (req,res)=>{
 router.get('/type/:type',requireToken,async (req,res)=>{
     try{
         const type=req.params.type;
-        const c= await Allergicreaction.find({type});
+        const user_id=req.user._id;
+        const c= await Allergicreaction.find({type,user_id});
         res.json(c)
     }
     catch(err){
@@ -30,6 +31,7 @@ router.get('/type/:type',requireToken,async (req,res)=>{
 // view a particular allergic reaction instance using its id
 router.get('/:id',requireToken,async (req,res)=>{
     try{
+        
         const id=req.params.id;
         const c= await Allergicreaction.findById({_id:id});
         res.json(c)

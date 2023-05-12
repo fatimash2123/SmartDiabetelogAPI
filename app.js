@@ -45,6 +45,8 @@ const LongInsulinRouter=require("./routes/Longinsulin");
 const AllergicReactionRouter=require("./routes/Allergisreaction");
 const PrescriptionRouter=require("./routes/Prescription");
 const OtpRouter=require("./routes/OTPGenerator");
+const DashboardRouter=require("./routes/Dashboard")
+const MessageRouter=require("./routes/Message")
 //routes middlewares
 app.use(authenticationRouter);
 app.use("/bloodsugar",bloodSugarRouter);
@@ -56,6 +58,8 @@ app.use("/longinsulin",LongInsulinRouter);
 app.use("/allergicreaction",AllergicReactionRouter);
 app.use("/prescription",PrescriptionRouter);
 app.use("/otp",OtpRouter);
+app.use("/dashboard",DashboardRouter);
+app.use("/messages",MessageRouter);
 
 
 

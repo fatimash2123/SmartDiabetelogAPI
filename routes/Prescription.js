@@ -8,7 +8,8 @@ const requireToken=require("../middlewares/requireToken");
 // view all prescriptions 
 router.get('/',requireToken,async (req,res)=>{
     try{
-        const prescription= await Prescription.find({});
+        const user_id=req.user._id;
+        const prescription= await Prescription.find({"user_id":user_id});
         res.json(prescription)
     }
     catch(err){
@@ -16,6 +17,18 @@ router.get('/',requireToken,async (req,res)=>{
     }
 })
 
+// view a particular prescriptions 
+router.get('/:id',requireToken,async (req,res)=>{
+    try{
+        const id=req.params.id;
+        const prescription= await Prescription.find({"_id":id});
+        console.log(prescription)
+        res.json(prescription[0])
+    }
+    catch(err){
+        res.json({"error":"Connection Failed! Try Again"})
+    }
+})
 
 // add a new  prescription instance
 router.post('/',requireToken,async(req,res)=>{
@@ -35,7 +48,9 @@ router.post('/',requireToken,async(req,res)=>{
 router.patch('/:id',requireToken,async (req,res)=>{
     try{
         const id=req.params.id;
+        console.log("prescription id is ",id)
         const prescription= await Prescription.findByIdAndUpdate({_id:id},req.body);
+        console.log(prescription)
         res.json({"status":"Successfully Updated",prescription})
     }
     catch(err){

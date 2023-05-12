@@ -15,6 +15,10 @@ const AllergicReactionSchema=new mongoose.Schema({
     }],
     description:{
         type:String,
+    }, 
+    user_id:{
+        type:"ObjectId",
+        ref:'User'
     }
 },{timestamps:true})
 module.exports=mongoose.model("Allergicreaction",AllergicReactionSchema);

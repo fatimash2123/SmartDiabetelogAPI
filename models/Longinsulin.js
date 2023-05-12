@@ -16,6 +16,10 @@ const LongInsulinSchema=new mongoose.Schema({
     user_id:{
         type:Object,
         ref:'User'
+    },
+    prescription_id:{
+        type:Object,
+        ref:'Prescription'
     }
 },{timestamps:true})
 module.exports=mongoose.model("Longinsulin",LongInsulinSchema);

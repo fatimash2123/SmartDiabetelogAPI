@@ -3,11 +3,12 @@ const router=express.Router();
 const LongInsulin=require("../models/Longinsulin")
 const requireToken=require("../middlewares/requireToken");
 
-// view a particular long insulin instance using its id
+// view all long insulin instances
 router.get('/:id',requireToken,async (req,res)=>{
     try{
         const id=req.params.id;
-        const c= await LongInsulin.findById({_id:id});
+        user_id=req.user._id;
+        const c= await LongInsulin.find({"user_id":user_id,"prescription_id":id});
         res.json(c)
     }
     catch(err){
@@ -19,9 +20,9 @@ router.get('/:id',requireToken,async (req,res)=>{
 // add new long insulin  instance
 router.post('/',requireToken,async(req,res)=>{
     try{
-        const { name,units,time}=req.body;
+        const { name,units,time,prescription_id}=req.body;
         const user_id=req.user._id;
-        const c=new LongInsulin({name,units,time,user_id});
+        const c=new LongInsulin({name,units,time,user_id,prescription_id});
         await c.save()
         res.json({"status":"Stored Successfully",c})
    

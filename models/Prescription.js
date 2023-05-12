@@ -11,6 +11,9 @@ const PrescriptionSchema=new mongoose.Schema({
             ref:"Oralmedication"
         }
     }]},
+    user_id:{
+        type:"ObjectId",
+    },
     long_insulin:{
         type:"ObjectId",
         ref:"Longinsulin"
