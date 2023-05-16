@@ -4,15 +4,15 @@ const CholesterolSchema=new mongoose.Schema({
     id:mongoose.Schema.Types.ObjectId,
     ldl:{
         type:Number,
-        required:true
+     
     },
     hdl:{
         type:Number,
-        required:true
+   
     },
     triglycerides:{
         type:Number,
-        required:true
+   
     },
     description:{
         type:String,

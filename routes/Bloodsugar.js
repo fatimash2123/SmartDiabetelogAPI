@@ -19,9 +19,10 @@ router.get('/instance/:id',requireToken,async (req,res)=>{
 // view all blood sugar instances of the day
 router.get('/:date',requireToken,async (req,res)=>{
     try{
+        const user_id=req.user._id;
         const date=req.params.date;
         console.log(date)
-        const bs= await Bloodsugar.find({"creationDate":date});
+        const bs= await Bloodsugar.find({user_id:user_id,creationDate:date});
         res.setHeader("Content-Type","application/json")
         console.log(bs)
         res.status(200).json(bs)
@@ -39,7 +40,7 @@ router.post('/',requireToken,async(req,res)=>{
         const user_id=req.user._id;
         const bs=new Bloodsugar({concentration,unit,description,date,event,creationDate,creationTime,user_id});
         bs.save()
-    res.status(201).json({"status":"Stored Successfully"})
+    res.status(201).json(bs)
     }
     catch(err){
         res.status(500).json({"error":"Not Stored! Try Again"})

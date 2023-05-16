@@ -40,7 +40,7 @@ router.post('/',requireToken,async(req,res)=>{
         const user_id=req.user._id;
         const bp=new Bloodpressure({disystolic,systolic,description,createdAt,user_id});
         bp.save()
-    res.status(200).json({"status":"Stored Successfully"})
+    res.status(200).json(bp)
     }
     catch(err){
         res.status(500).json({"error":"Not Stored! Try Again"})

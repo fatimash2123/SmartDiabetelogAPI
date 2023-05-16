@@ -18,7 +18,6 @@ const {mongoURL}=require("./keys")
 const mongoose=require("mongoose")
 mongoose.set('strictQuery', true)
 
-
 //connection to database
 mongoose.connect(mongoURL,(error)=>{
     if(error){
@@ -28,6 +27,41 @@ mongoose.connect(mongoURL,(error)=>{
     console.log("Connection to db successful")
     }
 })
+
+
+
+
+const server = http.createServer(app);
+const ws = require('socket.io')(server);
+// Handle incoming messages
+ws.on('hey', (message) => {
+    console.log('hey', message);
+
+    // // Broadcast the message to all clients
+    // wss.clients.forEach((client) => {
+    //     if (client.readyState === WebSocket.OPEN) {
+    //         client.send(message);
+    //     }
+    // });
+});
+
+// Handle incoming messages
+ws.on('messages', (message) => {
+    console.log('Received message:', message);
+
+    // // Broadcast the message to all clients
+    // wss.clients.forEach((client) => {
+    //     if (client.readyState === WebSocket.OPEN) {
+    //         client.send(message);
+    //     }
+    // });
+});
+
+// Handle disconnection
+ws.on('close', () => {
+    console.log('Client disconnected');
+});
+
 
 //check the token and declare user
 app.get('/',requireToken,(req,res)=>{
@@ -63,7 +97,7 @@ app.use("/messages",MessageRouter);
 
 
 
-app.listen(PORT,()=>{
+server.listen(PORT,()=>{
     console.log("Server Running at "+PORT);
 });
 

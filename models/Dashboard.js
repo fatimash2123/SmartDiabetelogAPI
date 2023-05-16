@@ -11,8 +11,7 @@ const DashboardSchema = new mongoose.Schema({
     },
     detail: {
         type: String,
-        unique: true,
-        required: true
+ 
     },
     userAsked: {
         type: "ObjectId",

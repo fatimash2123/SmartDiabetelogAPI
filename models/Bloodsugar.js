@@ -5,17 +5,17 @@ const BloodsugarSchema=new mongoose.Schema({
     id:mongoose.Schema.Types.ObjectId,
     concentration:{
         type:Number,
-        required:true
+     
     },
     unit:{
         type:String,
         enum:["mmol/L" , "mg/dL"],
         default:'mmol/L',
-        required:true
+        
     },
     description:{
         type:String,
-        required:true
+       
     },
     date:{
         type:Date

@@ -22,6 +22,7 @@ router.get('/:sdate/:edate', requireToken, async (req, res) => {
         const sdate = req.params.sdate;
         const edate = req.params.edate;
         let bs = await Cholesterol.find({
+            user_id:req.user._id,
             createdAt: { $gte: sdate, $lte: edate }
         });
         res.status(200).json(bs)
@@ -39,7 +40,7 @@ router.post('/', requireToken, async (req, res) => {
         const user_id = req.user._id;
         const c = new Cholesterol({hdl, ldl, triglycerides, description, user_id });
         c.save()
-        res.status(200).json({ "status": "Stored Successfully" })
+        res.status(200).json(c)
     }
     catch (err) {
         res.status(500).json({ "error": "Not Stored! Try Again" })

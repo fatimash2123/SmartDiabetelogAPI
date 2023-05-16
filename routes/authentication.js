@@ -89,7 +89,7 @@ router.patch('/', requireToken, async (req, res) => {
 
 router.get('/profile', requireToken, async (req, res) => {
     try {
-        const userDetails = await User.findById({ _id: req.user._id },{tokens:0,_id:0,userVerified:0,password:0});
+        const userDetails = await User.findById({ _id: req.user._id },{tokens:0,userVerified:0,password:0});
         res.status(200).json({userDetails })
     }
     catch (err) {
