@@ -24,7 +24,7 @@ router.get('/sendemail',requireToken,async (req,res)=>{
             //securesally@gmail.com
           user: 'fshahzad2123@gmail.com',
           //oernwtexlvpcakni
-          pass:"pbbtnjwsguqktkbz"
+          pass:"spzmvqulujofkegt"
           // 'HardworkIsLife.'
         },
         port:465,
