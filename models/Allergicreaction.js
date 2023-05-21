@@ -1,24 +1,27 @@
-const mongoose=require("mongoose");
-const AllergicReactionSchema=new mongoose.Schema({
-    id:mongoose.Schema.Types.ObjectId,
-    name:{
-        type:String,
-        required:true
-    },
-    type:{
+const mongoose = require("mongoose");
+const AllergicReactionSchema = new mongoose.Schema({
+    id: mongoose.Schema.Types.ObjectId,
+    name: {
         type: String,
-        enum : ['food','medication'],
-        required:true
+        required: true
     },
-    symptoms:[{
-        type:String,
+    type: {
+        type: String,
+        enum: ['food', 'medication'],
+        required: true
+    },
+    symptoms: [{
+        type: String,
     }],
-    description:{
-        type:String,
-    }, 
-    user_id:{
-        type:"ObjectId",
-        ref:'User'
-    }
-},{timestamps:true})
-module.exports=mongoose.model("Allergicreaction",AllergicReactionSchema);
+    description: {
+        type: String,
+    },
+    user_id: {
+        type: "ObjectId",
+        ref: 'User'
+    },
+    active_agent: [{
+        type: String,
+    }]
+}, { timestamps: true })
+module.exports = mongoose.model("Allergicreaction", AllergicReactionSchema);

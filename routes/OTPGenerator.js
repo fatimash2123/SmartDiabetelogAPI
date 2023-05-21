@@ -3,7 +3,7 @@ const router=express.Router();
 const OTP=require("../models/OTP");
 const requireToken=require("../middlewares/requireToken");
 var nodemailer = require("nodemailer");
-
+const User = require("../models/User");
 const generateOTP=async(id)=>{
     let otp="";
     for(let i=0; i<4; i++){
@@ -71,5 +71,47 @@ router.get('/deleteotp',requireToken,async (req,res)=>{
         res.json({"error":"Connection Failed! Try Again"})
     }
 })
+
+//send otp in case of forget password
+// send an email  
+router.post('/sendemail/forgetpass',async (req,res)=>{
+  const {email}=req.body
+  console.log("body= ",req.body)
+    
+  var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+          //securesally@gmail.com
+        user: 'fshahzad2123@gmail.com',
+        //oernwtexlvpcakni
+        pass:"spzmvqulujofkegt"
+        // 'HardworkIsLife.'
+      },
+      port:465,
+      host:'securesally@gmail.com'
+    });
+  
+    const user= await User.find({ email});
+    const otpValue=await generateOTP(user._id);
+    var mailOptions = {
+      from: 'fshahzad2123@gmail.com',
+      to: email,
+  
+      subject: 'Forget Password for SmartDiabetelog ',
+      text: `OTP is ${otpValue}!!`
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+        res.send({error})
+      } else {
+        console.log('Email sent: ' + info.response);
+        res.send({"status":"email successfully send","code":otpValue})
+      }
+    });
+
+})
+
 
 module.exports=router

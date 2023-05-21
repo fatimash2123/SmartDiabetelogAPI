@@ -45,9 +45,9 @@ router.get('/:id',requireToken,async (req,res)=>{
 // add new allergic reaction instance
 router.post('/',requireToken,async(req,res)=>{
     try{
-        const { name,type,symptoms,description}=req.body;
+        const { name,type,symptoms,description,active_agent}=req.body;
         const user_id=req.user._id;
-        const c=new Allergicreaction({name,type,symptoms,description,user_id});
+        const c=new Allergicreaction({name,type,symptoms,description,user_id,active_agent});
         await c.save()
         res.json({"status":"Stored Successfully",c})
    

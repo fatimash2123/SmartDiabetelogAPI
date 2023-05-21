@@ -4,6 +4,7 @@ const User = require("../models/User");
 const { jwtkey } = require("../keys")
 const jwt = require("jsonwebtoken");
 const requireToken = require("../middlewares/requireToken");
+const bcrypt = require("bcrypt")
 
 
 router.post('/register', async (req, res) => {
@@ -14,9 +15,9 @@ router.post('/register', async (req, res) => {
         await user.save();
         console.log("here")
         // //generate token
-        const token=await user.generateAuthToken();
+        const token = await user.generateAuthToken();
         console.log(token)
-        return res.status(200).json({ status:"registeration in process","token":token });
+        return res.status(200).json({ status: "registeration in process", "token": token });
     }
     catch (err) {
         if (err.code == 11000) {
@@ -24,7 +25,7 @@ router.post('/register', async (req, res) => {
         }
         else {
             console.log(err.message)
-           return  res.status(500).json({ error: "Something went Wrong! Try Again" })
+            return res.status(500).json({ error: "Something went Wrong! Try Again" })
         }
     }
 })
@@ -32,6 +33,7 @@ router.post('/register', async (req, res) => {
 router.post("/login", async (req, res, next) => {
     //if user did not provide email or password
     const { email, password } = req.body;
+    console.log(req.body)
     if (!email || !password) {
         console.log(1)
         return res.status(404).send({ "error": "Wrong email or password" });
@@ -52,25 +54,27 @@ router.post("/login", async (req, res, next) => {
             return res.status(404).send({ "error": "Wrong email or password" });
         }
 
-         //match password
-         await user.comparePassword(password);
-         console.log(req.body)
-         //generate token
-         const token=await user.generateAuthToken();
-         console.log(token)
-         //const token = jwt.sign({ userId: user._id }, jwtkey)
- 
+        //match password
+        await user.comparePassword(password);
+        console.log(req.body)
+        //generate token
+        const token = await user.generateAuthToken();
+        console.log(token)
+        //const token = jwt.sign({ userId: user._id }, jwtkey)
+
 
         res.setHeader("Content-Type", "application/json")
         const a = JSON.stringify({ "token": token })
         return res.status(200).json({ token });
     }
     catch (err) {
-        console.log(3)
+        console.log(err)
+        console.log(333)
         console.log(err)
         res.status(500).json({ "error": "Something went Wrong! Try Again" })
     }
 })
+
 
 
 //edit profile information
@@ -87,10 +91,36 @@ router.patch('/', requireToken, async (req, res) => {
     }
 })
 
+//change password
+//edit profile information
+router.patch('/changePassword', async (req, res) => {
+    try {
+        console.log(req.body)
+        const { email, password } = req.body
+    
+
+        //hashing password
+        const saltRounds = 10; // The number of salt rounds
+        const salt = bcrypt.genSaltSync(saltRounds);
+        const hashedPassword = bcrypt.hashSync(password, salt);
+
+
+
+        const user = await User.find({ email });
+        const accountInfo = await User.findByIdAndUpdate({ _id: user[0]._id }, { password: hashedPassword });
+        console.log(accountInfo)
+        res.status(200).json({ "status": "success" })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({ "error": "failed" })
+    }
+})
+
 router.get('/profile', requireToken, async (req, res) => {
     try {
-        const userDetails = await User.findById({ _id: req.user._id },{tokens:0,userVerified:0,password:0});
-        res.status(200).json({userDetails })
+        const userDetails = await User.findById({ _id: req.user._id }, { tokens: 0, userVerified: 0, password: 0 });
+        res.status(200).json({ userDetails })
     }
     catch (err) {
         res.status(500).json({ "error": "Connection Failed! Try Again" })
